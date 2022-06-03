@@ -13,18 +13,48 @@ class UserList extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public $user_cursor = [];
-    protected $paginationTheme = 'bootstrap';
-    protected $listeners = ['user-updated' => 'functionName'];
+    public $uid;
+    public $name;
+    public $email;
+    public $access_level;
+    public $read_permission;
+    public $write_permission;
 
-    public function functionName($user)
+    protected $paginationTheme = 'bootstrap';
+
+    protected $rules = [
+        'uid' => 'required',
+        'name' => 'required|min:6',
+        'email' => 'required|email',
+        'access_level' => 'required|min:0|max:255',
+        'read_permission' => 'required|min:0|max:1',
+        'write_permission' => 'required|min:0|max:1',
+    ];
+
+    public function populateUpdateUserModal($user)
     {
-        $this->user_cursor = $user;
+        $this->resetErrorBag();
+        $this->uid = $user['id'];
+        $user = UserModel::find($user['id']);
+        foreach($user->toArray() as $key => $value) {
+            if (isset($this->rules[$key])) {
+                $this->$key = $value;
+            }
+        }
+        $this->emit('populated');
     }
 
-    public function updateUser($user)
+    public function updateUser()
     {
-        $this->emit('user-updated', $user);
+        $this->validate();
+        $user = UserModel::find($this->uid);
+        $rules = [...array_keys($this->rules)];
+        array_shift($rules);
+        foreach($rules as $key) {
+            $user->$key = $this->$key;
+        }
+        $user->save();
+        $this->emit('updated');
     }
 
     public function render()

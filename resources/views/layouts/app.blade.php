@@ -76,11 +76,14 @@
         </nav>
 
         <main class="flex-shrink-0">
-            @if (Session::has('has_warning'))
-            <div class="alert alert-warning text-center" role="alert" style="margin-top:-3rem!important;">
-              {{ Session::get('has_warning') }}
-            </div>
-            @endif
+            @foreach (Session::all() as $key => $value)
+               @if (str_starts_with($key, 'has_'))
+                <div class="alert alert-{{ str_replace('has_', '', $key) }} alert-dismissible text-center fade show" role="alert" style="margin-top:-3rem!important;">
+                  <strong>{{ $value }}</strong>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+               @endif
+            @endforeach
             @yield('content')
         </main>
         <footer class="footer mt-auto py-3 bg-light">

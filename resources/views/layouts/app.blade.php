@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @livewireStyles
 </head>
 <body>
     <div id="app" class="d-flex flex-column h-100" style="height:100vh!important;">
@@ -91,6 +92,7 @@
                 <span class="text-muted">Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</span>
             </div>
         </footer>
+        @livewireScripts
     </div>
 </body>
 </html>

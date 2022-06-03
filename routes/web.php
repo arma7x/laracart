@@ -22,5 +22,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin')->middleware('alp:access_level@0,read,write')->group(function () {
-    Route::get('/users', [App\Http\Controllers\Admin\ManageUser::class, 'index']);
+    Route::get('/manage-user', [App\Http\Controllers\Admin\ManageUser::class, 'index'])->name('admin.manage-user');
 });

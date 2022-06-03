@@ -31,7 +31,7 @@ class CheckAccessLevel
             } else if (in_array($guard, $filters)) {
                 $fn = "can".ucfirst($guard);
                 if (ALP::$fn() === false)
-                    abort(403, 'Forbidden');
+                    abort(403, "Forbidden");
             }
         }
         return $next($request);

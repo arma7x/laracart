@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Facades\AccessLevelPermissionHelper as ALP;
 
@@ -21,6 +22,8 @@ class CheckAccessLevel
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
+        if (Auth::user() === null)
+            abort(401, "Unauthorized");
         $filters = ["access_level", "read", "write"];
         $guards = $guards ?: [];
         foreach ($guards as $guard) {

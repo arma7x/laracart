@@ -24,7 +24,7 @@
                         <td class="text-center">{{ $user->read_permission }}</td>
                         <td class="text-center">{{ $user->write_permission }}</td>
                         @if (is_null($user->email_verified_at) || !$user->email_verified_at)
-                        <td class="text-center">!</td>
+                        <td class="text-center font-weight-bold text-danger">!</td>
                         @else
                         <td class="user-date" data-date="{{ $user->email_verified_at }}"></td>
                         @endif

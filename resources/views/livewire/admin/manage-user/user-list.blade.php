@@ -51,33 +51,34 @@
                 <form wire:submit.prevent="submit">
                     <label class="form-label">{{ __('Name') }}</label>
                     <div class="col mb-3">
-                        <input type="text" class="form-control" wire:model.debounce.360s="name">
+                        <input type="text" class="form-control update-user" wire:model.lazy="name">
                         @error('name') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Email') }}</label>
                     <div class="mb-3">
-                        <input type="text" class="form-control" wire:model.360s="email">
+                        <input type="text" class="form-control update-user" wire:model.lazy="email">
                         @error('email') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Access Level') }}</label>
                     <div class="mb-3">
-                        <input type="number" class="form-control" wire:model.360s="access_level" min="0" max="255">
+                        <input type="number" class="form-control update-user" wire:model.lazy="access_level" min="0" max="255">
                         @error('access_level') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Read Permission') }}</label>
                     <div class="mb-3">
-                        <input type="number" class="form-control" wire:model.360s="read_permission" min="0" max="1">
+                        <input type="number" class="form-control update-user" wire:model.lazy="read_permission" min="0" max="1">
                         @error('read_permission') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Write Permission') }}</label>
                     <div class="mb-3">
-                        <input type="number" class="form-control" wire:model.360s="write_permission" min="0" max="1">
+                        <input type="number" class="form-control update-user" wire:model.lazy="write_permission" min="0" max="1">
                         @error('write_permission') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-primary" onClick="@this.updateUser()">Save changes</button>
+                <button id="confirmButton" type="button" class="btn btn-sm btn-warning" onClick="confirmChanges()">{{ __('Confirm Changes') }}</button>
+                <button id="userUpdateButton" type="button" class="btn btn-sm btn-primary d-none" onClick="updateUser()">{{ __('Save Changes') }}</button>
               </div>
             </div>
           </div>
@@ -86,20 +87,34 @@
     @push('scripts')
     <script>
 
+        let loading = false;
         let debounce = -1;
         let isUpdate = false;
 
         let userListTable;
         let updateUserModal;
+        let userUpdateButton;
+        let confirmButton;
 
         document.addEventListener('livewire:load', function () {
 
             userListTable = document.getElementById('userListTable');
             updateUserModal = document.getElementById('updateUserModal');
+            userUpdateButton = document.getElementById('userUpdateButton');
+            confirmButton = document.getElementById('confirmButton');
 
             toLocalDateString()
 
+            Livewire.hook('message.sent', component => {
+                loading = true;
+                userUpdateButton.disabled = true;
+                document.body.style.cursor='wait';
+            })
+
             Livewire.hook('message.processed', component => {
+                loading = false;
+                document.body.style.cursor='default';
+                userUpdateButton.disabled = false;
                 toLocalDateString();
                 toggleUpdateVisibility();
             })
@@ -114,6 +129,14 @@
                 toggleUpdateVisibility();
                 alert("{{ __('Success') }}")
                 setTimeout(() => location.reload(), 100);
+            })
+
+            const inputs = document.getElementsByClassName('update-user');
+            Object.keys(inputs).forEach((i) => {
+                inputs[i].addEventListener('input', () => {
+                    confirmButton.classList.remove('d-none');
+                    userUpdateButton.classList.add('d-none');
+                })
             })
 
             // TODO
@@ -161,6 +184,17 @@
                 if (updateUserModal)
                     updateUserModal.classList.add('d-none');
             }
+        }
+
+        function confirmChanges() {
+            confirmButton.classList.add('d-none');
+            userUpdateButton.classList.remove('d-none');
+        }
+
+        function updateUser() {
+            if (loading)
+                return
+            @this.updateUser()
         }
 
         function cancelUpdate() {

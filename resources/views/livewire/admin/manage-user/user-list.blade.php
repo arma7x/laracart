@@ -51,27 +51,27 @@
                 <form wire:submit.prevent="submit">
                     <label class="form-label">{{ __('Name') }}</label>
                     <div class="col mb-3">
-                        <input type="text" class="form-control" wire:model.lazy="name">
+                        <input type="text" class="form-control" wire:model.debounce.360s="name">
                         @error('name') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Email') }}</label>
                     <div class="mb-3">
-                        <input type="text" class="form-control" wire:model.lazy="email">
+                        <input type="text" class="form-control" wire:model.360s="email">
                         @error('email') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Access Level') }}</label>
                     <div class="mb-3">
-                        <input type="number" class="form-control" wire:model.lazy="access_level" min="0" max="255">
+                        <input type="number" class="form-control" wire:model.360s="access_level" min="0" max="255">
                         @error('access_level') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Read Permission') }}</label>
                     <div class="mb-3">
-                        <input type="number" class="form-control" wire:model.lazy="read_permission" min="0" max="1">
+                        <input type="number" class="form-control" wire:model.360s="read_permission" min="0" max="1">
                         @error('read_permission') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Write Permission') }}</label>
                     <div class="mb-3">
-                        <input type="number" class="form-control" wire:model.lazy="write_permission" min="0" max="1">
+                        <input type="number" class="form-control" wire:model.360s="write_permission" min="0" max="1">
                         @error('write_permission') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                 </form>

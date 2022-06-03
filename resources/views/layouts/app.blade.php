@@ -77,7 +77,9 @@
 
         <main class="flex-shrink-0">
             @if (Session::has('has_warning'))
-            <p class="text-center text-danger">{{ Session::get('has_warning') }}</p>
+            <div class="alert alert-warning text-center" role="alert" style="margin-top:-3rem!important;">
+              {{ Session::get('has_warning') }}
+            </div>
             @endif
             @yield('content')
         </main>

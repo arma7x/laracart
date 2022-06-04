@@ -31,7 +31,7 @@
                         <td class="user-date" data-date="{{ $user->created_at }}"></td>
                         <td class="user-date" data-date="{{ $user->updated_at }}"></td>
                         <td>
-                            <button class="btn btn-sm btn-secondary" onClick="@this.populateUpdateUserModal({{ $user->toJson() }})" >{{ __('Update') }}</button>
+                            <button class="btn btn-sm btn-secondary" onClick="resetForm({{ $user->toJson() }})" >{{ __('Update') }}</button>
                             <button class="btn btn-sm btn-danger" onClick="deleteUser({{ $user->toJson() }})">{{ __('Delete') }}</button>
                         </td>
                     </tr>
@@ -44,41 +44,41 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">ID: {{ $uid }} | {{ $name }}</h5>
+                <h5 class="modal-title" id="modalLabel">{{ $name }}</h5>
                 <button type="button" class="btn-close" onClick="cancelUpdate()" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form wire:submit.prevent="submit">
+                <form>
+                    <input type="hidden" type="text" class="form-control update-user" data-id="id">
                     <label class="form-label">{{ __('Name') }}</label>
                     <div class="col mb-3">
-                        <input type="text" class="form-control update-user" wire:model.lazy="name">
+                        <input type="text" class="form-control update-user" data-id="name">
                         @error('name') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Email') }}</label>
                     <div class="mb-3">
-                        <input type="text" class="form-control update-user" wire:model.lazy="email">
+                        <input type="text" class="form-control update-user" data-id="email">
                         @error('email') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Access Level') }}</label>
                     <div class="mb-3">
-                        <input type="number" class="form-control update-user" wire:model.lazy="access_level" min="0" max="255">
+                        <input type="number" class="form-control update-user" data-id="access_level" min="0" max="255">
                         @error('access_level') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Read Permission') }}</label>
                     <div class="mb-3">
-                        <input type="number" class="form-control update-user" wire:model.lazy="read_permission" min="0" max="1">
+                        <input type="number" class="form-control update-user" data-id="read_permission" min="0" max="1">
                         @error('read_permission') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                     <label class="form-label">{{ __('Write Permission') }}</label>
                     <div class="mb-3">
-                        <input type="number" class="form-control update-user" wire:model.lazy="write_permission" min="0" max="1">
+                        <input type="number" class="form-control update-user" data-id="write_permission" min="0" max="1">
                         @error('write_permission') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                 </form>
               </div>
               <div class="modal-footer">
-                <button id="confirmButton" type="button" class="btn btn-sm btn-warning" onClick="confirmChanges()">{{ __('Confirm Changes') }}</button>
-                <button id="userUpdateButton" type="button" class="btn btn-sm btn-primary d-none" onClick="updateUser()">{{ __('Save Changes') }}</button>
+                <button id="userUpdateButton" type="button" class="btn btn-sm btn-primary" onClick="updateUser()">{{ __('Save Changes') }}</button>
               </div>
             </div>
           </div>
@@ -87,41 +87,44 @@
     @push('scripts')
     <script>
 
-        let loading = false;
         let debounce = -1;
         let isUpdate = false;
 
+        let formFields;
         let userListTable;
         let updateUserModal;
         let userUpdateButton;
-        let confirmButton;
+        let targetUser;
 
         document.addEventListener('livewire:load', function () {
 
+            formFields = document.getElementsByClassName('update-user');
             userListTable = document.getElementById('userListTable');
             updateUserModal = document.getElementById('updateUserModal');
             userUpdateButton = document.getElementById('userUpdateButton');
-            confirmButton = document.getElementById('confirmButton');
 
             toLocalDateString()
 
             Livewire.hook('message.sent', component => {
-                loading = true;
                 userUpdateButton.disabled = true;
                 document.body.style.cursor='wait';
             })
 
             Livewire.hook('message.processed', component => {
-                loading = false;
+                if (targetUser != null) {
+                    populateForm(targetUser);
+                }
                 document.body.style.cursor='default';
                 userUpdateButton.disabled = false;
                 toLocalDateString();
                 toggleUpdateVisibility();
             })
 
-            @this.on('populated', () => {
+            @this.on('reseted-populated', (user) => {
+                targetUser = user;
+                populateForm(targetUser);
                 isUpdate = true;
-                toggleUpdateVisibility()
+                toggleUpdateVisibility();
             })
 
             @this.on('updated', () => {
@@ -129,14 +132,6 @@
                 toggleUpdateVisibility();
                 alert("{{ __('Success') }}")
                 setTimeout(() => location.reload(), 100);
-            })
-
-            const inputs = document.getElementsByClassName('update-user');
-            Object.keys(inputs).forEach((i) => {
-                inputs[i].addEventListener('input', () => {
-                    confirmButton.classList.remove('d-none');
-                    userUpdateButton.classList.add('d-none');
-                })
             })
 
             // TODO
@@ -154,10 +149,12 @@
                         urlParams.set('search', evt.target.value);
                     else
                         urlParams.delete('search');
-                    if (urlParams.toString())
-                      window.location.href = `${document.location.protocol}//${document.location.host}${document.location.pathname}?${urlParams.toString()}`
-                    else
+                    if (urlParams.toString()) {
+                        const url = `${document.location.protocol}//${document.location.host}${document.location.pathname}?${urlParams.toString()}`
+                        window.location.href = url;
+                    } else {
                       window.location.href = `${document.location.protocol}//${document.location.host}${document.location.pathname}`
+                    }
                 }, 500)
             });
         })
@@ -186,18 +183,29 @@
             }
         }
 
-        function confirmChanges() {
-            confirmButton.classList.add('d-none');
-            userUpdateButton.classList.remove('d-none');
+        function populateForm(user) {
+            Object.keys(formFields).forEach((i) => {
+                const key = formFields[i].getAttribute("data-id");
+                formFields[i].value = user[key];
+            });
+        }
+
+        function resetForm(user) {
+            @this.resetErrorPopulate(user);
         }
 
         function updateUser() {
-            if (loading)
-                return
-            @this.updateUser()
+            let user = {};
+            Object.keys(formFields).forEach((i) => {
+                const key = formFields[i].getAttribute("data-id");
+                user[key] = formFields[i].value;
+            });
+            const conf = alert("{{ __('Are you sure to continue this operation ?') }}");
+            @this.updateUser(user)
         }
 
         function cancelUpdate() {
+            targetUser = null;
             isUpdate = false;
             toggleUpdateVisibility();
         }

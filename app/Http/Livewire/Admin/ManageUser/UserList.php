@@ -13,7 +13,6 @@ class UserList extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public $uid;
     public $name;
     public $email;
     public $access_level;
@@ -23,7 +22,6 @@ class UserList extends Component
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
-        'uid' => 'required',
         'name' => 'required|min:6',
         'email' => 'required|email',
         'access_level' => 'required|min:0|max:255',
@@ -31,26 +29,24 @@ class UserList extends Component
         'write_permission' => 'required|min:0|max:1',
     ];
 
-    public function populateUpdateUserModal($user)
+    public function resetErrorPopulate($user)
     {
         $this->resetErrorBag();
-        $this->uid = $user['id'];
-        $user = UserModel::find($user['id']);
-        foreach($user->toArray() as $key => $value) {
+        $this->emit('reseted-populated', $user);
+    }
+
+    public function updateUser($user)
+    {
+        $id = $user['id'];
+        foreach($user as $key => $value) {
             if (isset($this->rules[$key])) {
                 $this->$key = $value;
             }
         }
-        $this->emit('populated');
-    }
-
-    public function updateUser()
-    {
         $this->validate();
-        $user = UserModel::find($this->uid);
-        $rules = [...array_keys($this->rules)];
-        array_shift($rules);
-        foreach($rules as $key) {
+        $user = UserModel::find($id);
+        $whitelist = [...array_keys($this->rules)];
+        foreach($whitelist as $key) {
             $user->$key = $this->$key;
         }
         $user->save();

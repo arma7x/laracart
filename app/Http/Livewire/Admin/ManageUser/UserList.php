@@ -55,8 +55,21 @@ class UserList extends Component
 
     public function render()
     {
+        //
+        $q = request()->query('search');
+        $userList = [];
+        if ($q) {
+          $userList = UserModel::where('id', '!=', Auth::user()->id)
+             ->where(function($query) use ($q) {
+                $query->where('email', 'like', '%' . $q . '%');
+                $query->orWhere('name', 'like', '%' . $q . '%');
+             })
+            ->orderBy('access_level', 'asc')->paginate(15);
+        } else {
+            $userList = UserModel::where('id', '!=', Auth::user()->id)->orderBy('access_level', 'asc')->paginate(15);
+        }
         return view('livewire.admin.manage-user.user-list', [
-            'user_list' => UserModel::where('id', '!=', Auth::user()->id)->orderBy('access_level', 'asc')->paginate(15),
+            'userList' => $userList,
         ]);
     }
 }

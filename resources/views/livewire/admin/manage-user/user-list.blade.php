@@ -15,7 +15,7 @@
                     <td>{{ __('Action') }}</td>
                 </thead>
                 <tbody>
-                    @foreach ($user_list as $user)
+                    @foreach ($userList as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
@@ -38,13 +38,13 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $user_list->links() }}
+            {{ $userList->links() }}
         </div>
         <div id="updateUserModal" tabindex="-1" class="d-none" aria-labelledby="updateUserModalLabel" aria-hidden="false">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">{{ $name }}</h5>
+                <h5 class="modal-title" id="modalLabel">{{ __('Please fill in the form') }}</h5>
                 <button type="button" class="btn-close" onClick="cancelUpdate()" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -90,6 +90,7 @@
         let debounce = -1;
         let isUpdate = false;
 
+        let userSearchInput;
         let formFields;
         let userListTable;
         let updateUserModal;
@@ -135,7 +136,9 @@
             })
 
             // TODO
-            document.getElementById('userSearchInput').addEventListener('input', (evt) => {
+            userSearchInput = document.getElementById('userSearchInput');
+            userSearchInput.focus()
+            userSearchInput.addEventListener('input', (evt) => {
                 if (isUpdate)
                     return
                 if (debounce > -1) {

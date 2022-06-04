@@ -12,5 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .copy('resources/js/qrcode.min.js', 'public/js')
+    .copy('./node_modules/bootstrap/dist/js/bootstrap.min.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css');

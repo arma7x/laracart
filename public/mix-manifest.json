@@ -1,4 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/app.js.LICENSE.txt": "/js/app.js.LICENSE.txt",
+    "/js/qrcode.min.js": "/js/qrcode.min.js",
+    "/js/bootstrap.min.js": "/js/bootstrap.min.js"
 }

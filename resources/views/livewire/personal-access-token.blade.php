@@ -33,8 +33,7 @@
     <script>
         document.addEventListener('livewire:load', function () {
             @this.on('removed', () => {
-                alert("{{ __('The operation was successful') }}")
-                setTimeout(() => location.reload(), 100);
+                alert("{{ __('The operation was successful') }}");
             });
         });
 

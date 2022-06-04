@@ -138,8 +138,7 @@
             })
 
             @this.on('deleted', () => {
-                alert("{{ __('The operation was successful') }}")
-                setTimeout(() => location.reload(), 100);
+                alert("{{ __('The operation was successful') }}");
             })
 
             userSearchInput = document.getElementById('userSearchInput');

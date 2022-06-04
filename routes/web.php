@@ -23,6 +23,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/manage-token', [App\Http\Controllers\ManageTokenController::class, 'index'])->middleware('auth')->name('manage-token');
 Route::post('/remove-tokens', [App\Http\Controllers\ManageTokenController::class, 'removeTokens'])->middleware('auth')->name('remove-tokens');
+Route::post('/generate-token', [App\Http\Controllers\ManageTokenController::class, 'generateToken'])->middleware('auth')->name('generate-token');
 
 Route::prefix('admin')->middleware('alp:access_level@0,read,write')->group(function () {
     Route::get('/manage-user', [App\Http\Controllers\Admin\ManageUserController::class, 'index'])->name('admin.manage-user');

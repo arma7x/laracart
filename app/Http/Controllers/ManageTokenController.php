@@ -11,6 +11,7 @@ class ManageTokenController extends Controller
         return view('manage-token');
     }
 
+    // TODO: require password
     public function generateToken()
     {
         request()->validate(['name' => 'required|max:255']);

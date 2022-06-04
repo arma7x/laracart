@@ -26,6 +26,7 @@
                             new bootstrap.Modal(qrModal).toggle();
                             qrModal.addEventListener('hidden.bs.modal', (evt) => {
                                 qrcode.clear();
+                                qrContainer.textContent = '';
                             });
                             qrModal.addEventListener('shown.bs.modal', () => {
                                 qrContainer.children[1].classList.add('img-fluid');

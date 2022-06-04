@@ -55,7 +55,11 @@
                                 </li>
                             @endif
                         @else
-                            @if (Auth::User()->access_level === 0 && Route::current()->getName() !== 'admin.manage-user')
+                            @if (Auth::User()->access_level === 0 && Route::current()->getName() === 'admin.manage-user')
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{{ route('admin.manage-user') }}" onclick="event.preventDefault();">{{ __('Manage User') }}</a>
+                                </li>
+                            @else
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.manage-user') }}">{{ __('Manage User') }}</a>
                                 </li>
@@ -64,13 +68,16 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::User()->name }}
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    @if (Route::current()->getName() === 'manage-token')
+                                        <a class="dropdown-item active" href="{{ route('manage-token') }}" onclick="event.preventDefault();">
+                                            {{ __('Manage Token') }}
+                                        </a>
+                                    @else
+                                        <a class="dropdown-item" href="{{ route('manage-token') }}">{{ __('Manage Token') }}</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();">
-                                        {{ __('Manage PAT') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();">
-                                        {{ __('Generate PAT QR-Code') }}
+                                        {{ __('Generate Token QR-Code') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

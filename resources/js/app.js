@@ -32,3 +32,13 @@ Vue.component('local-date', require('./components/LocalDateComponent.vue').defau
 const app = new Vue({
     el: '#app',
 });
+
+document.addEventListener('livewire:load', function () {
+    Livewire.hook('message.sent', () => {
+        console.log('Livewire@message.sent');
+    })
+
+    Livewire.hook('message.processed', () => {
+        console.log('Livewire@message.processed');
+    })
+})

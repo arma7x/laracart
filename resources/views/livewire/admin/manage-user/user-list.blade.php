@@ -138,7 +138,6 @@
             })
 
             @this.on('deleted', () => {
-                console.log('deleted');
                 alert("{{ __('The operation was successful') }}")
                 setTimeout(() => location.reload(), 100);
             })

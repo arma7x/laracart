@@ -131,7 +131,13 @@
             @this.on('updated', () => {
                 isUpdate = false;
                 toggleUpdateVisibility();
-                alert("{{ __('Success') }}")
+                alert("{{ __('The operation was successful') }}")
+                setTimeout(() => location.reload(), 100);
+            })
+
+            @this.on('deleted', () => {
+                console.log('deleted');
+                alert("{{ __('The operation was successful') }}")
                 setTimeout(() => location.reload(), 100);
             })
 
@@ -203,7 +209,7 @@
                 const key = formFields[i].getAttribute("data-id");
                 user[key] = formFields[i].value;
             });
-            const conf = alert("{{ __('Are you sure to continue this operation ?') }}");
+            const conf = confirm("{{ __('Are you sure to continue this operation ?') }}");
             if (!conf)
                 return;
             @this.updateUser(user)
@@ -216,6 +222,9 @@
         }
 
         function deleteUser(user) {
+            const conf = confirm("{{ __('Are you sure to continue this operation ?') }}");
+            if (!conf)
+                return;
             @this.deleteUser(user);
         }
     </script>

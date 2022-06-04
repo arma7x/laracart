@@ -54,12 +54,13 @@ class UserList extends Component
     }
 
     public function deleteUser($user) {
-
+        $user = UserModel::find($user['id']);
+        $user->delete();
+        $this->emit('deleted');
     }
 
     public function render()
     {
-        //
         $q = request()->query('search');
         $userList = [];
         if ($q) {

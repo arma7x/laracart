@@ -3,16 +3,18 @@
         <div id="userListTable" >
             <table class="table table-sm">
                 <thead>
-                    <td>{{ __('Id') }}</td>
-                    <td>{{ __('Name') }}</td>
-                    <td>{{ __('Email') }}</td>
-                    <td>{{ __('Access Level') }}</td>
-                    <td>{{ __('Read Permission') }}</td>
-                    <td>{{ __('Write Permission') }}</td>
-                    <td>{{ __('Email Verified At') }}</td>
-                    <td>{{ __('Created At') }}</td>
-                    <td>{{ __('Updated At') }}</td>
-                    <td>{{ __('Action') }}</td>
+                    <tr>
+                        <td>{{ __('Id') }}</td>
+                        <td>{{ __('Name') }}</td>
+                        <td>{{ __('Email') }}</td>
+                        <td>{{ __('Access Level') }}</td>
+                        <td>{{ __('Read Permission') }}</td>
+                        <td>{{ __('Write Permission') }}</td>
+                        <td>{{ __('Email Verified At') }}</td>
+                        <td>{{ __('Created At') }}</td>
+                        <td>{{ __('Updated At') }}</td>
+                        <td>{{ __('Action') }}</td>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach ($userList as $user)

@@ -138,9 +138,7 @@
             // TODO
             userSearchInput = document.getElementById('userSearchInput');
             userSearchInput.focus();
-            const val = userSearchInput.value;
-            userSearchInput.value = '';
-            userSearchInput.value = val;
+            userSearchInput.selectionStart = userSearchInput.selectionEnd = userSearchInput.value.length;
             userSearchInput.addEventListener('input', (evt) => {
                 if (isUpdate)
                     return

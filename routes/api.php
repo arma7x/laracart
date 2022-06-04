@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User as UserModel;
 
@@ -15,23 +14,23 @@ use App\Models\User as UserModel;
 |
 */
 
-Route::get('/ping', function (Request $request) {
+Route::get('/ping', function () {
     $name = request()->query('name') ?: 'World';
     return ['php' => "Hello $name from PHP v" . PHP_VERSION];
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->get('/user', function () {
+    return request()->user();
 });
 
-Route::post('/tokens/create', function (Request $request) {
+Route::post('/tokens/create', function () {
     $credentials = request()->validate([
         'email' => 'required|email|max:255',
         'password' => 'required|min:8',
     ]);
     if (Auth::attempt($credentials)) {
         $user = UserModel::where('email', request()->post('email'))->firstOrFail();
-        return ['token' => $user->createToken('sanctum-token')->plainTextToken];
+        return ['token' => $user->createToken(request()->header('user-agent') ?: 'Unknown')->plainTextToken];
     }
     return Response::json([
         'error' => __('The provided credentials do not match our records.')

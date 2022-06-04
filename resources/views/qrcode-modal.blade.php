@@ -2,7 +2,7 @@
                 <div class="modal-dialog modal-sm modal-body d-flex justify-content-center align-items-center">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="tokenQRCodeModalLabel">{{ __('Scan token QR-Code') }}</h5>
+                            <h5 class="modal-title" id="tokenQRCodeModalLabel">{{ __('Scan the QR-Code token') }}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div id="tokenQRCodeImg" class="modal-body"></div>

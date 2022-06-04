@@ -53,6 +53,10 @@ class UserList extends Component
         $this->emit('updated');
     }
 
+    public function deleteUser($user) {
+
+    }
+
     public function render()
     {
         //

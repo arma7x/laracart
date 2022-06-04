@@ -135,7 +135,6 @@
                 setTimeout(() => location.reload(), 100);
             })
 
-            // TODO
             userSearchInput = document.getElementById('userSearchInput');
             userSearchInput.focus();
             userSearchInput.selectionStart = userSearchInput.selectionEnd = userSearchInput.value.length;
@@ -205,6 +204,8 @@
                 user[key] = formFields[i].value;
             });
             const conf = alert("{{ __('Are you sure to continue this operation ?') }}");
+            if (!conf)
+                return;
             @this.updateUser(user)
         }
 
@@ -214,9 +215,8 @@
             toggleUpdateVisibility();
         }
 
-        // TODO
         function deleteUser(user) {
-            // @this.updateUser(user);
+            @this.deleteUser(user);
         }
     </script>
     @endpush

@@ -29,7 +29,7 @@
             </tbody>
         </table>
     </div>
-    @push('scripts')
+    @push('scripts-manage-token-lw')
     <script>
         document.addEventListener('livewire:load', function () {
             @this.on('removed', () => {
@@ -46,5 +46,5 @@
         }
     </script>
     @endpush
-    @stack('scripts')
+    @stack('scripts-manage-token-lw')
 </div>

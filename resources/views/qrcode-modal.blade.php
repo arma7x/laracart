@@ -9,7 +9,7 @@
                     </div>
                 </div>
             </div>
-            @push('scripts')
+            @push('scripts-qr-modal')
             <script>
                 function generateTokenQrCode() {
                     let tokenName = prompt("{{ __('Please enter token name') }}", "{{ config('app.name', 'Laravel') }}");
@@ -42,4 +42,4 @@
                 }
             </script>
             @endpush
-            @stack('scripts')
+            @stack('scripts-qr-modal')

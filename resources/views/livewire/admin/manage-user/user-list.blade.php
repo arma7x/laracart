@@ -86,7 +86,7 @@
           </div>
         </div>
     </div>
-    @push('scripts')
+    @push('scripts-user-list-lw')
     <script>
 
         let debounce = -1;
@@ -230,5 +230,5 @@
         }
     </script>
     @endpush
-    @stack('scripts')
+    @stack('scripts-user-list-lw')
 </div>

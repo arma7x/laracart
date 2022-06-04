@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    @push('scripts')
+    @push('scripts-manage-token')
     <script>
         function removeTokens() {
             const conf = confirm("{{ __('Are you sure to continue this operation ?') }}");
@@ -28,6 +28,6 @@
         }
     </script>
     @endpush
-    @stack('scripts')
+    @stack('scripts-manage-token')
 </div>
 @endsection

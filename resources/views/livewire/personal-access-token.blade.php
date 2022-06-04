@@ -18,9 +18,9 @@
                     <td>{{ $token->id }}</td>
                     <td>{{ $token->name }}</td>
                     <td>{!! implode(', ', $token->abilities) !!}</td>
-                    <td>{{ $token->last_used_at }}</td>
-                    <td>{{ $token->created_at }}</td>
-                    <td>{{ $token->updated_at }}</td>
+                    <td class="token-date" data-date="{{ $token->last_used_at }}"></td>
+                    <td class="token-date" data-date="{{ $token->created_at }}"></td>
+                    <td class="token-date" data-date="{{ $token->updated_at }}"></td>
                     <td>
                         <button class="btn btn-sm btn-warning" onClick="deleteToken({{ $token->id }})">{{ __('Remove') }}</button>
                     </td>
@@ -34,8 +34,20 @@
         document.addEventListener('livewire:load', function () {
             @this.on('removed', () => {
                 alert("{{ __('The operation was successful') }}");
+                toLocalDateString();
             });
+            toLocalDateString();
         });
+
+        function toLocalDateString() {
+            let userdates = document.getElementsByClassName('token-date');
+            Object.keys(userdates).forEach((i) => {
+                const offset = -(new Date().getTimezoneOffset() * 60 * 1000);
+                const d = new Date(userdates[i].getAttribute("data-date"));
+                d.setTime(d.getTime() + offset);
+                userdates[i].innerText = d.toLocaleString();
+            })
+        }
 
         function deleteToken(id) {
             const conf = confirm("{{ __('Are you sure to continue this operation ?') }}");

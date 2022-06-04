@@ -7,16 +7,7 @@
             <div class="card">
                 <div class="card-header d-flex flex-row justify-content-between">
                     <h3>{{ __('Manage Personal Access Tokens') }}</h3>
-                    <div>
-                        <a class="btn btn-warning" href="{{ route('remove-tokens') }}"
-                           onclick="event.preventDefault();document.getElementById('remove-tokens-form').submit();">
-                            {{ __('Remove All') }}
-                        </a>
-
-                        <form id="remove-tokens-form" action="{{ route('remove-tokens') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
+                    <button class="btn btn-danger" onclick="removeTokens();">{{ __('Remove All') }}</button>
                 </div>
                 <div class="card-body">
                     <livewire:personal-access-token />
@@ -24,5 +15,19 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+    <script>
+        function removeTokens() {
+            const conf = confirm("{{ __('Are you sure to continue this operation ?') }}");
+            if (conf) {
+                axios.post("{{ route('remove-tokens') }}")
+                .finally(() => {
+                    location.reload()
+                });
+            }
+        }
+    </script>
+    @endpush
+    @stack('scripts')
 </div>
 @endsection

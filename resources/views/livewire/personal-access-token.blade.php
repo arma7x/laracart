@@ -22,7 +22,7 @@
                     <td>{{ $token->created_at }}</td>
                     <td>{{ $token->updated_at }}</td>
                     <td>
-                        <button class="btn btn-sm btn-danger" onClick="deleteToken({{ $token->id }})">{{ __('Delete') }}</button>
+                        <button class="btn btn-sm btn-warning" onClick="deleteToken({{ $token->id }})">{{ __('Remove') }}</button>
                     </td>
                 </tr>
                 @endforeach

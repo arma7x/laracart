@@ -67,10 +67,10 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();">
-                                        {{ __('Manage Tokens') }}
+                                        {{ __('Manage PAT') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();">
-                                        {{ __('Generate Token QR-Code') }}
+                                        {{ __('Generate PAT QR-Code') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

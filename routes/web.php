@@ -21,6 +21,9 @@ Auth::routes(); // ['verify' => true] + middleware('verified');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/manage-token', [App\Http\Controllers\ManageTokenController::class, 'index'])->middleware('auth')->name('manage-token');
+Route::post('/remove-tokens', [App\Http\Controllers\ManageTokenController::class, 'removeTokens'])->middleware('auth')->name('remove-tokens');
+
 Route::prefix('admin')->middleware('alp:access_level@0,read,write')->group(function () {
-    Route::get('/manage-user', [App\Http\Controllers\Admin\ManageUser::class, 'index'])->name('admin.manage-user');
+    Route::get('/manage-user', [App\Http\Controllers\Admin\ManageUserController::class, 'index'])->name('admin.manage-user');
 });

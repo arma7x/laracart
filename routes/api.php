@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\User as UserModel;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
-
-    return ['token' => $token->plainTextToken];
+    $credentials = request()->validate([
+        'email' => 'required|email|max:255',
+        'password' => 'required|min:8',
+    ]);
+    if (Auth::attempt($credentials)) {
+        $user = UserModel::where('email', request()->post('email'))->firstOrFail();
+        return ['token' => $user->createToken('sanctum-token')->plainTextToken];
+    }
+    return Response::json([
+        'error' => __('The provided credentials do not match our records.')
+    ], 400);
 });

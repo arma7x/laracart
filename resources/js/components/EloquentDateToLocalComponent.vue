@@ -9,7 +9,10 @@
         },
         methods: {
             toLocal: (date) => {
-                return new Date(date).toLocaleString()
+                const offset = -(new Date().getTimezoneOffset() * 60 * 1000);
+                const d = new Date(date);
+                d.setTime(d.getTime() + offset);
+                return d.toLocaleString();
             }
         },
         mounted() {}

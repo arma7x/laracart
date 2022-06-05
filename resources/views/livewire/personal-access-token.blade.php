@@ -36,6 +36,15 @@
                 alert("{{ __('The operation was successful') }}");
                 toLocalDateString();
             });
+
+            @this.on('error-generate', (errors) => {
+                console.log(errors)
+            });
+
+            @this.on('token-generated', (token) => {
+                console.log(token)
+            });
+
             toLocalDateString();
         });
 
@@ -62,6 +71,11 @@
                 @this.removeTokens();
             }
         }
+
+        function generateToken() {
+            @this.generateToken('passwordhere');
+        }
+
     </script>
     @endpush
     @stack('scripts-manage-token-lw')

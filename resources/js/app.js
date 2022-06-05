@@ -34,10 +34,12 @@ const app = new Vue({
 document.addEventListener('livewire:load', function () {
     Livewire.hook('message.sent', () => {
         console.log('Livewire@message.sent');
+        _globalSetLoadingIndicator(true);
     })
 
     Livewire.hook('message.processed', () => {
         console.log('Livewire@message.processed');
+        _globalSetLoadingIndicator(false);
     })
 })
 

@@ -28,6 +28,7 @@
                 @endforeach
             </tbody>
         </table>
+        @include('qrcode-modal')
     </div>
     @push('scripts-manage-token-lw')
     <script>
@@ -45,7 +46,7 @@
             });
 
             @this.on('token-generated', (token) => {
-                console.log(token);
+                generateTokenQrCode(token);
                 toLocalDateString();
             });
 

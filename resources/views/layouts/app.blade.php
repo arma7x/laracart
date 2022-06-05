@@ -108,7 +108,6 @@
                @endif
             @endforeach
             @yield('content')
-            @include('qrcode-modal')
         </main>
 
         <footer class="footer mt-auto py-3 bg-light">

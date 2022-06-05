@@ -42,12 +42,3 @@ document.addEventListener('livewire:load', function () {
         _globalSetLoadingIndicator(false);
     })
 })
-
-window._globalSetLoadingIndicator = (status = true) => {
-    const indicator = document.getElementById('loadingIndicator')
-    if (status) {
-        indicator.classList.remove('d-none');
-    } else {
-        indicator.classList.add('d-none');
-    }
-}

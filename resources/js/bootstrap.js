@@ -27,3 +27,20 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('m
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+
+window._globalSetLoadingIndicator = (status = true) => {
+    const indicator = document.getElementById('loadingIndicator')
+    if (status) {
+        indicator.classList.remove('d-none');
+    } else {
+        indicator.classList.add('d-none');
+    }
+}
+
+window._globalEloquentDateToLocal = (date) => {
+    const offset = -(new Date().getTimezoneOffset() * 60 * 1000);
+    const d = new Date(date);
+    d.setTime(d.getTime() + offset);
+    return d.toLocaleString();
+}

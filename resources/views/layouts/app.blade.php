@@ -81,9 +81,6 @@
                                     @else
                                         <a class="dropdown-item" href="{{ route('manage-token') }}">{{ __('Manage Token') }}</a>
                                     @endif
-                                    <a class="dropdown-item" href="{{ route('generate-token') }}" onclick="event.preventDefault();generateTokenQrCode();">
-                                        {{ __('Generate Token QR-Code') }}
-                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

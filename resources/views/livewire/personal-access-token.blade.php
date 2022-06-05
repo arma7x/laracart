@@ -39,10 +39,14 @@
 
             @this.on('error-generate', (errors) => {
                 console.log(errors)
+                if (errors.password)
+                    alert(errors.password[0]);
+                toLocalDateString();
             });
 
             @this.on('token-generated', (token) => {
-                console.log(token)
+                console.log(token);
+                toLocalDateString();
             });
 
             toLocalDateString();
@@ -73,7 +77,11 @@
         }
 
         function generateToken() {
-            @this.generateToken('passwordhere');
+            const password = prompt("{{ __('Please enter your password') }}");
+            if (!password)
+                return
+            const device = prompt("{{ __('Please enter device name') }}", "{{ config('app.name', 'Laravel') }}");
+            @this.generateToken(password, device);
         }
 
     </script>

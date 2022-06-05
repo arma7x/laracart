@@ -14,7 +14,7 @@
                 function generateTokenQrCode() {
                     let tokenName = prompt("{{ __('Please enter token name') }}", "{{ config('app.name', 'Laravel') }}");
                     if (tokenName != null) {
-                        axios.post("{{ route('generate-token') }}", { name: tokenName })
+                        axios.post("", { name: tokenName })
                         .then(response => {
                             const qrModal = document.getElementById('tokenQRCodeModal');
                             const qrContainer = document.getElementById('tokenQRCodeImg');

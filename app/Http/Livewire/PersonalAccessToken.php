@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class PersonalAccessToken extends Component
 {
@@ -19,12 +20,6 @@ class PersonalAccessToken extends Component
         $this->emit('removed');
     }
 
-    /*
-     * required name, password
-     * validate password
-     * emit error-generate validation OR
-     * emit token-generated
-     */
     public function generateToken($password = '', $name = 'QR-Code') {
         $rules = ['name' => 'required|max:255', 'password' => 'required|min:8'];
         $inputs = ['name' => $name, 'password' => $password];
@@ -33,9 +28,16 @@ class PersonalAccessToken extends Component
             $this->emit('error-generate', $validator->errors());
             return;
         }
-        $this->emit('token-generated', '1212');
-        // $token = Auth::user()->createToken($name);
-        // $token->plainTextToken
+        $user = Auth::user();
+        if (!Hash::check($password, $user->password)) {
+            $this->emit('error-generate', [
+                'password' => [
+                    __('The given password does not match the current password.'),
+                ]
+            ]);
+            return;
+        }
+        $this->emit('token-generated', $user->createToken($name)->plainTextToken);
     }
 
     public function render()

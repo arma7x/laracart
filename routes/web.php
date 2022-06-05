@@ -23,6 +23,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/manage-token', [App\Http\Controllers\ManageTokenController::class, 'index'])->middleware('auth')->name('manage-token');
 
+Route::get('change-password', [App\Http\Controllers\Auth\ChangePasswordController::class, 'index'])->name('ui-change-password');
+Route::post('change-password', [App\Http\Controllers\Auth\ChangePasswordController::class, 'store'])->name('change-password');
+
 Route::prefix('admin')->middleware('alp:access_level@0,read,write')->group(function () {
     Route::get('/manage-user', [App\Http\Controllers\Admin\ManageUserController::class, 'index'])->name('admin.manage-user');
 });

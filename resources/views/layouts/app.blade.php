@@ -81,6 +81,13 @@
                                     @else
                                         <a class="dropdown-item" href="{{ route('manage-token') }}">{{ __('Manage Token') }}</a>
                                     @endif
+                                    @if (Route::current()->getName() === 'ui-change-password')
+                                        <a class="dropdown-item active" href="{{ route('change-password') }}" onclick="event.preventDefault();">
+                                            {{ __('Change Password') }}
+                                        </a>
+                                    @else
+                                        <a class="dropdown-item" href="{{ route('change-password') }}">{{ __('Change Password') }}</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

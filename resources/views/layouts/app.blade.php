@@ -31,7 +31,7 @@
                         {{ config('app.name', 'Laravel') }}
                     </a>
                     <div id="loadingIndicator" class="spinner-border text-secondary d-none" role="status">
-                      <span class="visually-hidden">Loading...</span>
+                      <span class="visually-hidden">{{ __('Loading...') }}</span>
                     </div>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

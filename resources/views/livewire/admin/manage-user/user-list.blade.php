@@ -133,8 +133,7 @@
             @this.on('updated', () => {
                 isUpdate = false;
                 toggleUpdateVisibility();
-                alert("{{ __('The operation was successful') }}")
-                setTimeout(() => location.reload(), 100);
+                alert("{{ __('The operation was successful') }}");
             })
 
             @this.on('deleted', () => {

@@ -22,7 +22,7 @@
                     <td class="token-date" data-date="{{ $token->created_at }}"></td>
                     <td class="token-date" data-date="{{ $token->updated_at }}"></td>
                     <td>
-                        <button class="btn btn-sm btn-warning" onClick="deleteToken({{ $token->id }})">{{ __('Remove') }}</button>
+                        <button class="btn btn-sm btn-warning" onClick="removeToken({{ $token->id }})">{{ __('Remove') }}</button>
                     </td>
                 </tr>
                 @endforeach
@@ -49,11 +49,18 @@
             })
         }
 
-        function deleteToken(id) {
+        function removeToken(id) {
             const conf = confirm("{{ __('Are you sure to continue this operation ?') }}");
             if (!conf)
                 return;
             @this.removeToken(id);
+        }
+
+        function removeTokens() {
+            const conf = confirm("{{ __('Are you sure to continue this operation ?') }}");
+            if (conf) {
+                @this.removeTokens();
+            }
         }
     </script>
     @endpush

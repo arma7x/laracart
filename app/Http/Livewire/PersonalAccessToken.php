@@ -13,6 +13,11 @@ class PersonalAccessToken extends Component
         $this->emit('removed');
     }
 
+    public function removeTokens() {
+        Auth::user()->tokens()->delete();
+        $this->emit('removed');
+    }
+
     public function render()
     {
         return view('livewire.personal-access-token', [

@@ -15,19 +15,5 @@
             </div>
         </div>
     </div>
-    @push('scripts-manage-token')
-    <script>
-        function removeTokens() {
-            const conf = confirm("{{ __('Are you sure to continue this operation ?') }}");
-            if (conf) {
-                axios.post("{{ route('remove-tokens') }}")
-                .finally(() => {
-                    location.reload()
-                });
-            }
-        }
-    </script>
-    @endpush
-    @stack('scripts-manage-token')
 </div>
 @endsection

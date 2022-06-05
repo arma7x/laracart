@@ -18,10 +18,4 @@ class ManageTokenController extends Controller
         $token = request()->user()->createToken(request()->post('name') ?: 'QR-Code');
         return response()->json(['token' => $token->plainTextToken]);
     }
-
-    public function removeTokens()
-    {
-        request()->user()->tokens()->delete();
-        return redirect('manage-token');
-    }
 }

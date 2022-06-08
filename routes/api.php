@@ -33,6 +33,6 @@ Route::post('/tokens/create', function () {
         return ['token' => $user->createToken(request()->header('user-agent') ?: 'Unknown')->plainTextToken];
     }
     return Response::json([
-        'error' => __('The provided credentials do not match our records.')
+        'message' => __('The provided credentials do not match our records.')
     ], 400);
 });

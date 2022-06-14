@@ -52,7 +52,7 @@
                         @guest
                             @if (Route::has('login'))
                                 <li id="loginNavItem" class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }} {{ firebase::user() ? '1' : '0' }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 

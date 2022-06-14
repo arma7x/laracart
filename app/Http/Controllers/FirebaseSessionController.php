@@ -16,12 +16,13 @@ class FirebaseSessionController extends Controller
             'token' => ['required'],
         ]);
         try {
-            if (Firebase::user() == null) {
+            $user = Firebase::user();
+            if ($user == null) {
                 Firebase::createSessionCookie(request()->post('token'));
                 return response()->json(['message' => __('Successfully logged-in')], 200);
             } else {
                 // TODO
-                // if token exp in <= 5days, Firebase::createSessionCookie(request()->post('token'));
+                // if token $user['exp'] in <= 5days, Firebase::createSessionCookie(request()->post('token'));
                 return response()->json(['message' => __('Forbidden')], 403);
             }
         } catch (\Exception $e) {

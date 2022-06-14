@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Facades\Helpers\AccessLevelPermissionHelper as ALP;
 
-class CheckAccessLevel
+class CheckAccessLevelPermission
 {
     /**
      * Handle an incoming request.

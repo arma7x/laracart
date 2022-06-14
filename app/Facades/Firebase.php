@@ -10,8 +10,8 @@ class Firebase
     private Factory $instance;
     protected String $sessionTokenName = 'firebase_token';
     protected int $sessionTokenExpire = 1209600;
-    private $_authInstance = NULL;
-    private $_user = NULL;
+    private $_authInstance = null;
+    private $_token = false;
 
     public function __construct(string $serviceAccountJSON, String $sessionTokenName, int $sessionTokenExpire)
     {
@@ -27,37 +27,39 @@ class Firebase
 
     public function auth(): Contract\Auth
     {
-        if ($this->_authInstance == NULL)
+        if ($this->_authInstance == null)
             $this->_authInstance = $this->instance->createAuth();
         return $this->_authInstance;
     }
 
     public function user()
     {
-        if ($this->_user == NULL)
+        if ($this->_token === false)
         {
             try {
-                $this->_user = $this->verifySessionCookie($this->getSessionCookie());
+                $this->_token = $this->verifySessionCookie($this->getSessionCookie());
             } catch (\Exception $e) {
-                $this->_user = NULL;
+                $this->_token = null;
+                return $this->_token;
             }
+        } else if ($this->_token === null) {
+            return $this->_token;
         }
-        return $this->_user;
+        return $this->_token->claims()->all();
     }
 
     public function getSessionCookie()
     {
-        return request()->cookie($this->sessionTokenName);
+        return $_COOKIE[$this->sessionTokenName];
     }
 
     public function verifySessionCookie($cookie)
     {
-        if ($cookie == NULL)
+        if ($cookie === null)
             throw new \Exception(__('Unauthorized'));
         $firebaseAuth = $this->_authInstance ?: $this->auth();
-        $verifiedToken = $firebaseAuth->verifySessionCookie($cookie, TRUE);
-        $this->_user = $verifiedToken->claims()->all();
-        return $this->_user;
+        $this->_token = $firebaseAuth->verifySessionCookie($cookie, TRUE);
+        return $this->_token;
     }
 
     public function createSessionCookie(String $token)
@@ -65,11 +67,13 @@ class Firebase
         $firebaseAuth = $this->_authInstance ?: $this->auth();
         $verifiedIdToken = $firebaseAuth->verifyIdToken($token, TRUE);
         $firebaseToken = $firebaseAuth->createSessionCookie($token, $this->sessionTokenExpire);
+        // TODO: secure on PROD
         setcookie($this->sessionTokenName, $firebaseToken, time() + $this->sessionTokenExpire, '/', '', false, true);
     }
 
     public function destroySessionCookie()
     {
+        // TODO: secure on PROD
         setcookie($this->sessionTokenName, null, -1, '/', '', false, true);
     }
 }

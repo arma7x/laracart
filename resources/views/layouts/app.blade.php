@@ -50,25 +50,30 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
-                            @if (Route::has('login'))
+                            @if (Route::has('login') && firebase::user() === null)
                                 <li id="loginNavItem" class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
-                            @if (Route::has('register'))
+                            @if (Route::has('register') && firebase::user() === null)
                                 <li id="registerNavItem" class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
 
+                            @if (firebase::user() === null)
                             <li id="firebaseLoginBtn">
                                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#firebaseLoginModal">{{ __('Firebase Login') }}</a>
                             </li>
-
-                            <li id="firebaseLogoutBtn" class="d-none">
+                            @else
+                            <li id="firebaseLogoutBtn">
+                                <a class="nav-link" href="#" onclick="event.preventDefault();">Hi {{ firebase::user()['name'] }}</a>
+                            </li>
+                            <li id="firebaseLogoutBtn">
                                 <a class="nav-link" href="#" onclick="event.preventDefault();logoutFirebase();">{{ __('Firebase Logout') }}</a>
                             </li>
+                            @endif
                         @else
                             @if (Auth::User()->access_level === 0 && Route::current()->getName() === 'admin.manage-user')
                                 <li class="nav-item">

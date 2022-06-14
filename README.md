@@ -9,5 +9,4 @@ A new Laravel project.
 
 ## TODO
 
-- Using firebase session cookie
 - Controller for superadmin to manage firebase users

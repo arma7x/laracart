@@ -11,6 +11,9 @@
             </div>
           </div>
         </div>
+        <form id="firebase-logout-form" action="{{ route('firebase-logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
         @push('scripts-firebase-login-modal')
         <script type="text/javascript">
             const uiConfig = {
@@ -37,31 +40,19 @@
             firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
                     console.log(user);
-                    const firebaseLoginBtn = document.getElementById('firebaseLoginBtn');
-                    firebaseLoginBtn.classList.add('d-none');
-                    const firebaseLogoutBtn = document.getElementById('firebaseLogoutBtn');
-                    firebaseLogoutBtn.classList.remove('d-none');
-                    const loginNavItem = document.getElementById('loginNavItem');
-                    loginNavItem.classList.add('d-none');
-                    const registerNavItem = document.getElementById('registerNavItem');
-                    registerNavItem.classList.add('d-none');
                     firebase.auth().currentUser.getIdToken()
                     .then((token) => {
-                        console.log(token);
+                        return axios.post("{{ route('firebase-login') }}", {token: token});
+                    })
+                    .then((res) => {
+                        console.log(res);
+                        location.reload();
                     })
                     .catch((err) => {
                         console.error(err);
                     });
                 } else {
-                    console.log('User is null');
-                    const firebaseLoginBtn = document.getElementById('firebaseLoginBtn');
-                    firebaseLoginBtn.classList.remove('d-none');
-                    const firebaseLogoutBtn = document.getElementById('firebaseLogoutBtn');
-                    firebaseLogoutBtn.classList.add('d-none');
-                    const loginNavItem = document.getElementById('loginNavItem');
-                    loginNavItem.classList.remove('d-none');
-                    const registerNavItem = document.getElementById('registerNavItem');
-                    registerNavItem.classList.remove('d-none');
+                    console.log("{{ __('Unauthorized') }}");
                     let timer = setInterval(() => {
                         const open = document.getElementsByClassName('firebaseui-callback-indicator-container').length > 0 || document.getElementsByClassName('firebaseui-info-bar').length > 0;
                         if (open) {
@@ -85,7 +76,7 @@
             function logoutFirebase() {
                 firebase.auth().signOut()
                 .finally(() => {
-                    window.location.reload();
+                    document.getElementById('firebase-logout-form').submit();
                 });
             }
         </script>

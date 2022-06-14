@@ -4,6 +4,7 @@ namespace App\Facades;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Contract;
 use Kreait\Firebase\Exception\Auth\FailedToVerifyToken;
+use Illuminate\Support\Facades\App;
 
 class Firebase
 {
@@ -67,13 +68,11 @@ class Firebase
         $firebaseAuth = $this->_authInstance ?: $this->auth();
         $verifiedIdToken = $firebaseAuth->verifyIdToken($token, TRUE);
         $firebaseToken = $firebaseAuth->createSessionCookie($token, $this->sessionTokenExpire);
-        // TODO: secure on PROD
-        setcookie($this->sessionTokenName, $firebaseToken, time() + $this->sessionTokenExpire, '/', '', false, true);
+        setcookie($this->sessionTokenName, $firebaseToken, time() + $this->sessionTokenExpire, '/', '', App::environment() === 'production', true);
     }
 
     public function destroySessionCookie()
     {
-        // TODO: secure on PROD
-        setcookie($this->sessionTokenName, null, -1, '/', '', false, true);
+        setcookie($this->sessionTokenName, null, -1, '/', '', App::environment() === 'production', true);
     }
 }

@@ -136,7 +136,7 @@
         @endif
         <footer class="footer mt-auto py-3 bg-light">
             <div class="container">
-                <span class="text-muted">Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</span>
+                <span class="text-muted">Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}, {{ App::environment() }})</span>
             </div>
         </footer>
         @livewireScripts

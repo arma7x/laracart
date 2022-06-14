@@ -10,3 +10,4 @@ A new Laravel project.
 ## TODO
 
 - Controller for superadmin to manage firebase users
+- firebase.guest middleware

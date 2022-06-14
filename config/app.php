@@ -195,6 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\AccessLevelPermissionProvider::class,
+        App\Providers\FirebaseServiceProvider::class,
 
     ],
 
@@ -211,7 +212,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'ALP' => App\Facades\AccessLevelPermissionHelper::class
+        'ALP' => App\Facades\AccessLevelPermissionHelper::class,
+        'firebase' => App\Facades\FirebaseHelper::class
     ])->toArray(),
 
 ];

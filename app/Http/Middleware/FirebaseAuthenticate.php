@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Facades\FirebaseHelper as Firebase;
+use App\Facades\Helpers\FirebaseHelper as Firebase;
 
 class FirebaseAuthenticate
 {

@@ -28,7 +28,7 @@
                 @endforeach
             </tbody>
         </table>
-        @include('qrcode-modal')
+        @include('widgets.qrcode-modal')
     </div>
     @push('scripts-manage-token-lw')
     <script>

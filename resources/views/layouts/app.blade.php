@@ -9,6 +9,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    @include('widgets.firebase-assets')
+
     <!-- Scripts -->
     <script src="{{ asset('js/qrcode.min.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
@@ -49,16 +51,24 @@
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item">
+                                <li id="loginNavItem" class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
-                                <li class="nav-item">
+                                <li id="registerNavItem" class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
+
+                            <li id="firebaseLoginBtn">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#firebaseLoginModal">{{ __('Firebase Login') }}</a>
+                            </li>
+
+                            <li id="firebaseLogoutBtn" class="d-none">
+                                <a class="nav-link" href="#" onclick="event.preventDefault();logoutFirebase();">{{ __('Firebase Logout') }}</a>
+                            </li>
                         @else
                             @if (Auth::User()->access_level === 0 && Route::current()->getName() === 'admin.manage-user')
                                 <li class="nav-item">
@@ -116,7 +126,9 @@
             @endforeach
             @yield('content')
         </main>
-
+        @guest
+            @include('widgets.firebase-login-modal')
+        @endif
         <footer class="footer mt-auto py-3 bg-light">
             <div class="container">
                 <span class="text-muted">Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</span>

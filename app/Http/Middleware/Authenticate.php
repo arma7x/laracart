@@ -16,11 +16,11 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if ($request->is('api/*')) {
-            abort(response()->json(['message' => 'Unauthorized'], 401));
+            abort(response()->json(['message' => __('Unauthorized')], 401));
         }
 
         if (! $request->expectsJson()) {
-            Session::flash('has_warning', 'Unauthorized');
+            Session::flash('has_warning', __('Unauthorized'));
             return route('login');
         }
     }

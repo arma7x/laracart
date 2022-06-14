@@ -23,18 +23,18 @@ class CheckAccessLevelPermission
     public function handle(Request $request, Closure $next, ...$guards)
     {
         if (Auth::user() === null)
-            abort(401, 'Unauthorized');
+            abort(401, __('Unauthorized'));
         $filters = ['access_level', 'read', 'write'];
         $guards = $guards ?: [];
         foreach ($guards as $guard) {
             $keyLevel = explode('@', $guard);
             if (COUNT($keyLevel) === 2 && in_array($keyLevel[0], $filters)) {
                 if (ALP::accessLevelGranted((int) $keyLevel[1]) === false)
-                    abort(403, 'Forbidden');
+                    abort(403, __('Forbidden'));
             } else if (in_array($guard, $filters)) {
                 $fn = 'can'.ucfirst($guard);
                 if (ALP::$fn() === false)
-                    abort(403, 'Forbidden');
+                    abort(403, __('Forbidden'));
             }
         }
         return $next($request);

@@ -212,8 +212,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'ALP' => App\Facades\AccessLevelPermissionHelper::class,
-        'firebase' => App\Facades\FirebaseHelper::class
+        'ALP' => App\Facades\Helpers\AccessLevelPermissionHelper::class,
+        'firebase' => App\Facades\Helpers\FirebaseHelper::class
     ])->toArray(),
 
 ];

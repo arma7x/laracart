@@ -6,12 +6,15 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\User as UserModel;
+
 
 class UserList extends Component
 {
     use WithFileUploads;
     use WithPagination;
+    use AuthorizesRequests;
 
     public $name;
     public $email;
@@ -37,6 +40,7 @@ class UserList extends Component
 
     public function updateUser($user)
     {
+        $this->authorize('manage-user');
         $id = $user['id'];
         foreach($user as $key => $value) {
             if (isset($this->rules[$key])) {
@@ -54,6 +58,7 @@ class UserList extends Component
     }
 
     public function deleteUser($user) {
+        $this->authorize('manage-user');
         $user = UserModel::find($user['id']);
         $user->delete();
         $this->emit('deleted');

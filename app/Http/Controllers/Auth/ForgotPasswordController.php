@@ -7,6 +7,10 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['firebase.guest', 'guest']);
+    }
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller

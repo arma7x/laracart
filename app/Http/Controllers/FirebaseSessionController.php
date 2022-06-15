@@ -10,6 +10,11 @@ use App\Facades\Helpers\FirebaseHelper as Firebase;
 
 class FirebaseSessionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
     public function createSession()
     {
         request()->validate([

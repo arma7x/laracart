@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['firebase.guest', 'guest']);
+    }
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller

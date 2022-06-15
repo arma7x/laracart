@@ -9,4 +9,4 @@ A new Laravel project.
 
 ## TODO
 
-- Controller for superadmin to manage firebase users
+- Controller for superadmin to manage firebase users, https://firebase.google.com/docs/auth/admin

@@ -168,10 +168,7 @@
         function toLocalDateString() {
             let userdates = document.getElementsByClassName('user-date');
             Object.keys(userdates).forEach((i) => {
-                const offset = -(new Date().getTimezoneOffset() * 60 * 1000);
-                const d = new Date(userdates[i].getAttribute("data-date"));
-                d.setTime(d.getTime() + offset);
-                userdates[i].innerText = d.toLocaleString();
+                userdates[i].innerText = window._globalEloquentDateToLocal(userdates[i].getAttribute("data-date"));
             })
         }
 

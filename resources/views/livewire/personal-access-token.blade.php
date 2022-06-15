@@ -54,12 +54,9 @@
         });
 
         function toLocalDateString() {
-            let userdates = document.getElementsByClassName('token-date');
-            Object.keys(userdates).forEach((i) => {
-                const offset = -(new Date().getTimezoneOffset() * 60 * 1000);
-                const d = new Date(userdates[i].getAttribute("data-date"));
-                d.setTime(d.getTime() + offset);
-                userdates[i].innerText = d.toLocaleString();
+            let tokens = document.getElementsByClassName('token-date');
+            Object.keys(tokens).forEach((i) => {
+                tokens[i].innerText = window._globalEloquentDateToLocal(tokens[i].getAttribute("data-date"));
             })
         }
 

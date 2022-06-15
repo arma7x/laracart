@@ -27,9 +27,9 @@ class UserList extends Component
     protected $rules = [
         'name' => 'required|min:6',
         'email' => 'required|email',
-        'access_level' => 'required|min:0|max:255',
-        'read_permission' => 'required|min:0|max:1',
-        'write_permission' => 'required|min:0|max:1',
+        'access_level' => 'required|integer|min:0|max:255',
+        'read_permission' => 'required|integer|min:0|max:1',
+        'write_permission' => 'required|integer|min:0|max:1',
     ];
 
     public function resetErrorPopulate($user)

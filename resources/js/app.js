@@ -41,4 +41,9 @@ document.addEventListener('livewire:load', function () {
         console.log('Livewire@message.processed');
         _globalSetLoadingIndicator(false);
     })
+
+    Livewire.hook('message.failed', () => {
+        console.log('Livewire@message.failed');
+        _globalSetLoadingIndicator(false);
+    })
 })

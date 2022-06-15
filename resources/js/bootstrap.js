@@ -33,8 +33,10 @@ window._globalSetLoadingIndicator = (status = true) => {
     const indicator = document.getElementById('loadingIndicator')
     if (status) {
         indicator.classList.remove('d-none');
+        document.body.style.cursor = 'wait';
     } else {
         indicator.classList.add('d-none');
+        document.body.style.cursor = 'default';
     }
 }
 

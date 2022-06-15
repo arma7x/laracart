@@ -110,14 +110,12 @@
 
             Livewire.hook('message.sent', component => {
                 userUpdateButton.disabled = true;
-                document.body.style.cursor='wait';
             })
 
             Livewire.hook('message.processed', component => {
                 if (targetUser != null) {
                     populateForm(targetUser);
                 }
-                document.body.style.cursor='default';
                 userUpdateButton.disabled = false;
                 toLocalDateString();
                 toggleUpdateVisibility();

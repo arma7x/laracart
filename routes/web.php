@@ -29,6 +29,8 @@ Route::post('/password/change', [App\Http\Controllers\Auth\ChangePasswordControl
 Route::post('/firebase-login', [App\Http\Controllers\FirebaseSessionController::class, 'createSession'])->name('firebase-login');
 Route::post('/firebase-logout', [App\Http\Controllers\FirebaseSessionController::class, 'destroySession'])->name('firebase-logout');
 
-Route::prefix('admin')->middleware('auth')->middleware('alp:access_level@0,read,write')->group(function () {
-    Route::get('/manage-user', [App\Http\Controllers\Admin\ManageUserController::class, 'index'])->name('admin.manage-user');
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/manage-user', [App\Http\Controllers\Admin\ManageUserController::class, 'index'])
+        ->middleware(['auth', 'alp:access_level@0,read,write'])
+        ->name('admin.manage-user');
 });

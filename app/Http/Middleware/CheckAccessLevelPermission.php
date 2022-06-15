@@ -18,12 +18,11 @@ class CheckAccessLevelPermission
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @param  string|null  ...$guards
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     * usage middleware('alp:access_level@255,read,write')
+     * @always use this middleware with \App\Http\Middleware\Authenticate
+     * @usage middleware('alp:access_level@255,read,write')
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
-        if (Auth::user() === null)
-            abort(401, __('Unauthorized'));
         $filters = ['access_level', 'read', 'write'];
         $guards = $guards ?: [];
         foreach ($guards as $guard) {

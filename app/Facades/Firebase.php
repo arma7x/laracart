@@ -75,4 +75,12 @@ class Firebase
     {
         setcookie($this->sessionTokenName, null, -1, '/', '', App::environment() === 'production', true);
     }
+
+    public function verifySessionToken($token)
+    {
+        // @TODO FirebaseApi middleware
+        $firebaseAuth = $this->_authInstance ?: $this->auth();
+        $this->_token = $firebaseAuth->verifyIdToken($token, TRUE);
+        return $this->_token;
+    }
 }

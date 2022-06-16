@@ -26,8 +26,9 @@ class FirebaseSessionController extends Controller
                 Firebase::createSessionCookie(request()->post('token'));
                 return response()->json(['message' => __('Successfully logged-in')], 200);
             } else {
-                // TODO
+                // @TODO
                 // if token $user['exp'] in <= 5days, Firebase::createSessionCookie(request()->post('token'));
+                // return response()->json(['message' => __('Successfully refreshed cookies')], 200);
                 return response()->json(['message' => __('Forbidden')], 403);
             }
         } catch (\Exception $e) {

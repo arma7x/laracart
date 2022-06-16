@@ -33,6 +33,8 @@ class FirebaseGuest
                 return redirect('/');
             }
         } catch (\Exception $e) {
+            // @TODO proper catch
+            // Firebase/Exception/Auth
             if ($request->is('api/*')) {
                 abort(response()->json(['message' => $e->getMessage()], 403));
             }

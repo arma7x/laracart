@@ -14,7 +14,7 @@ class AccessLevelPermissionProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('alp',function(){
+        $this->app->singleton('alp',function(){
             return new AccessLevelPermission();
         });
     }

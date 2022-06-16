@@ -14,7 +14,7 @@ class FirebaseServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('firebase', function() {
+        $this->app->singleton('firebase', function() {
             $twoWeek = 1209600;
             return new Firebase(base_path('firebase-adminsdk.json'), 'firebase_token', $twoWeek);
         });

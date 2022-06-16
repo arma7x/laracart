@@ -32,6 +32,7 @@ class FirebaseSessionController extends Controller
                 return response()->json(['message' => __('Forbidden')], 403);
             }
         } catch (\Exception $e) {
+            // @TODO proper catch
             return response()->json(['message' => $e->getMessage()], 422);
         }
     }

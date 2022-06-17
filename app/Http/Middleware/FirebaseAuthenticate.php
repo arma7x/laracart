@@ -27,7 +27,8 @@ class FirebaseAuthenticate
             if ($request->is('api/*')) {
                 abort(response()->json(['message' => $e->getMessage()], 401));
             }
-            abort(401, $e->getMessage());
+            Session::flash('has_warning', $e->getMessage());
+            return redirect('/');
         }
         return $next($request);
     }

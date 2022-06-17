@@ -44,8 +44,11 @@
                     .then((token) => {
                         return axios.post("{{ route('firebase-login') }}", {token: token});
                     })
-                    .then(() => {
-                        document.location = '/';
+                    .then((res) => {
+                        if (res.data == null)
+                            return;
+                        if (res.data.redirect != null)
+                            document.location = res.data.redirect;
                     })
                     .catch((err) => {
                         console.error(err);

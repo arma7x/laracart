@@ -19,7 +19,8 @@ Route::get('/', function () {
 
 Auth::routes(); // ['verify' => true] + middleware('verified');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')->name('home');
+Route::get('/firebase', [App\Http\Controllers\HomeController::class, 'index'])->middleware('firebase.auth')->name('firebase');
 
 Route::get('/manage-token', [App\Http\Controllers\ManageTokenController::class, 'index'])->name('manage-token');
 

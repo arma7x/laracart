@@ -51,7 +51,7 @@ class Firebase
 
     public function getSessionCookie()
     {
-        return $_COOKIE[$this->sessionTokenName];
+        return isset($_COOKIE[$this->sessionTokenName]) ? $_COOKIE[$this->sessionTokenName] : null;
     }
 
     public function verifySessionCookie($cookie)

@@ -9,16 +9,16 @@ use Illuminate\Support\Facades\App;
 class Firebase
 {
     private Factory $instance;
-    protected String $sessionTokenName = 'firebase_token';
-    protected int $sessionTokenExpire = 1209600;
+    protected String $sessionCookieName = 'firebase_token';
+    protected int $sessionCookieExpire = 1209600;
     private $_authInstance = null;
     private $_token = false;
 
-    public function __construct(string $serviceAccountJSON, String $sessionTokenName, int $sessionTokenExpire)
+    public function __construct(string $serviceAccountJSON, String $sessionCookieName, int $sessionCookieExpire)
     {
         $this->instance = (new Factory)->withServiceAccount($serviceAccountJSON);
-        $this->sessionTokenName = $sessionTokenName;
-        $this->sessionTokenExpire = $sessionTokenExpire;
+        $this->sessionCookieName = $sessionCookieName;
+        $this->sessionCookieExpire = $sessionCookieExpire;
     }
 
     public function instance(): Factory
@@ -51,7 +51,7 @@ class Firebase
 
     public function getSessionCookie()
     {
-        return isset($_COOKIE[$this->sessionTokenName]) ? $_COOKIE[$this->sessionTokenName] : null;
+        return isset($_COOKIE[$this->sessionCookieName]) ? $_COOKIE[$this->sessionCookieName] : null;
     }
 
     public function verifySessionCookie($cookie)
@@ -67,13 +67,13 @@ class Firebase
     {
         $firebaseAuth = $this->_authInstance ?: $this->auth();
         $verifiedIdToken = $firebaseAuth->verifyIdToken($token, TRUE);
-        $firebaseToken = $firebaseAuth->createSessionCookie($token, $this->sessionTokenExpire);
-        setcookie($this->sessionTokenName, $firebaseToken, time() + $this->sessionTokenExpire, '/', '', App::environment() === 'production', true);
+        $firebaseToken = $firebaseAuth->createSessionCookie($token, $this->sessionCookieExpire);
+        setcookie($this->sessionCookieName, $firebaseToken, time() + $this->sessionCookieExpire, '/', '', App::environment() === 'production', true);
     }
 
     public function destroySessionCookie()
     {
-        setcookie($this->sessionTokenName, null, -1, '/', '', App::environment() === 'production', true);
+        setcookie($this->sessionCookieName, null, -1, '/', '', App::environment() === 'production', true);
     }
 
     public function verifySessionToken($token)

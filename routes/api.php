@@ -23,6 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function () {
     return request()->user();
 });
 
+Route::prefix('laravel')->middleware('firebase.api')->group(function () {
+    Route::get('/user', function () {
+        return firebase::user();
+    });
+});
+
 Route::post('/tokens/create', function () {
     $credentials = request()->validate([
         'email' => 'required|email|max:255',

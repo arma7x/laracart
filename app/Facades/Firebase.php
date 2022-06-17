@@ -78,7 +78,8 @@ class Firebase
 
     public function verifySessionToken($token)
     {
-        // @TODO FirebaseApi middleware
+        if ($token === null)
+            throw new \Exception(__('Unauthorized'));
         $firebaseAuth = $this->_authInstance ?: $this->auth();
         $this->_token = $firebaseAuth->verifyIdToken($token, TRUE);
         return $this->_token;

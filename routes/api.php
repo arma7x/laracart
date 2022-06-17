@@ -19,8 +19,10 @@ Route::get('/ping', function () {
     return ['php' => "Hello $name from PHP v" . PHP_VERSION];
 });
 
-Route::middleware('auth:sanctum')->get('/user', function () {
-    return request()->user();
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function () {
+        return request()->user();
+    });
 });
 
 Route::prefix('laravel')->middleware('firebase.api')->group(function () {

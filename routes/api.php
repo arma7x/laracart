@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-Route::prefix('laravel')->middleware('firebase.api')->group(function () {
+Route::prefix('firebase')->middleware('firebase.api')->group(function () {
     Route::get('/user', function () {
         return firebase::user();
     });

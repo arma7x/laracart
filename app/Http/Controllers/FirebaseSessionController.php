@@ -29,9 +29,11 @@ class FirebaseSessionController extends Controller
                     'redirect' => route('firebase'),
                 ], 200);
             } else {
-                // @TODO
-                // if token $user['exp'] in <= 5days, Firebase::createSessionCookie(request()->post('token'));
-                // return response()->json(['message' => __('Successfully refresh the token')], 200);
+                $now = new \DateTimeImmutable(gmdate('D, d M Y H:i:s T', time()));
+                if ($user['exp']->diff($now)->days <= 7) {
+                    Firebase::createSessionCookie(request()->post('token'));
+                    return response()->json(['message' => __('Successfully refresh the token')], 200);
+                }
                 return response()->json(['message' => __('Already logged-in')], 200);
             }
         } catch (\Exception $e) {

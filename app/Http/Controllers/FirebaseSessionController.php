@@ -37,7 +37,7 @@ class FirebaseSessionController extends Controller
                 return response()->json(['message' => __('Already logged-in')], 200);
             }
         } catch (\Exception $e) {
-            // @TODO proper catch
+            // @TODO proper catch \Kreait\Firebase\Exception\Auth
             return response()->json(['message' => $e->getMessage()], 422);
         }
     }

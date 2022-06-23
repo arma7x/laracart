@@ -93,7 +93,7 @@
         </div>
     </div>
 </div>
-@push('scripts-user-list-lw')
+@push('scripts-user-list')
 <script>
 
     let isUpdate = false;
@@ -205,4 +205,4 @@
     }
 </script>
 @endpush
-@stack('scripts-user-list-lw')
+@stack('scripts-user-list')

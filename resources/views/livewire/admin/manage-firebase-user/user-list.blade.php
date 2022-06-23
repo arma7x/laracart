@@ -4,7 +4,7 @@
         <input id="searchInput" type="text" class="form-control w-25" wire:model.debounce.500ms="search" placeholder="{{ __('Search user') }}">
     </div>
     <div class="card-body">
-        {{ $user }}
+        {{ var_dump($user) }}
     </div>
 </div>
 @push('scripts-firebase-user-list')

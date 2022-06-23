@@ -31,7 +31,13 @@ Route::post('/firebase-login', [App\Http\Controllers\FirebaseSessionController::
 Route::post('/firebase-logout', [App\Http\Controllers\FirebaseSessionController::class, 'destroySession'])->name('firebase-logout');
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
+
     Route::get('/manage-user', [App\Http\Controllers\Admin\ManageUserController::class, 'index'])
         ->middleware('alp:access_level@0,read,write')
         ->name('admin.manage-user');
+
+    Route::get('/manage-firebase-user', [App\Http\Controllers\Admin\ManageFirebaseUser::class, 'index'])
+        ->middleware('alp:access_level@0,read,write')
+        ->name('admin.manage-firebase-user');
+
 });

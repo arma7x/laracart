@@ -58,16 +58,16 @@ class Firebase
     {
         if ($cookie === null)
             throw new \Exception(__('Unauthorized'));
-        $firebaseAuth = $this->_authInstance ?: $this->auth();
-        $this->_token = $firebaseAuth->verifySessionCookie($cookie, TRUE);
+        $authInstance = $this->_authInstance ?: $this->auth();
+        $this->_token = $authInstance->verifySessionCookie($cookie, TRUE);
         return $this->_token;
     }
 
     public function createSessionCookie(String $token)
     {
-        $firebaseAuth = $this->_authInstance ?: $this->auth();
-        $verifiedIdToken = $firebaseAuth->verifyIdToken($token, TRUE);
-        $firebaseToken = $firebaseAuth->createSessionCookie($token, $this->sessionCookieExpire);
+        $authInstance = $this->_authInstance ?: $this->auth();
+        $verifiedIdToken = $authInstance->verifyIdToken($token, TRUE);
+        $firebaseToken = $authInstance->createSessionCookie($token, $this->sessionCookieExpire);
         setcookie($this->sessionCookieName, $firebaseToken, time() + $this->sessionCookieExpire, '/', '', App::environment() === 'production', true);
     }
 
@@ -80,8 +80,8 @@ class Firebase
     {
         if ($token === null)
             throw new \Exception(__('Unauthorized'));
-        $firebaseAuth = $this->_authInstance ?: $this->auth();
-        $this->_token = $firebaseAuth->verifyIdToken($token, TRUE);
+        $authInstance = $this->_authInstance ?: $this->auth();
+        $this->_token = $authInstance->verifyIdToken($token, TRUE);
         return $this->_token;
     }
 }

@@ -75,13 +75,12 @@
                             </li>
                             @endif
                         @else
-                            @if (Auth::User()->access_level === 0 && Route::current()->getName() === 'admin.manage-user')
+                            @if (Auth::User()->access_level === 0)
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="{{ route('admin.manage-user') }}" onclick="event.preventDefault();">{{ __('Manage User') }}</a>
+                                    <a class="nav-link {{ Route::current()->getName() === 'admin.manage-user' ? 'active' : ''; }}" href="{{ route('admin.manage-user') }}" onclick="{{ Route::current()->getName() === 'admin.manage-user' ? 'event.preventDefault();' : '' }}">{{ __('Manage User') }}</a>
                                 </li>
-                            @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.manage-user') }}">{{ __('Manage User') }}</a>
+                                    <a class="nav-link {{ Route::current()->getName() === 'admin.manage-firebase-user' ? 'active' : ''; }}" href="{{ route('admin.manage-firebase-user') }}" onclick="{{ Route::current()->getName() === 'admin.manage-firebase-user' ? 'event.preventDefault();' : '' }}">{{ __('Manage Firebase User') }}</a>
                                 </li>
                             @endif
                             <li class="nav-item dropdown">
@@ -89,20 +88,12 @@
                                     {{ Auth::User()->name }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    @if (Route::current()->getName() === 'manage-token')
-                                        <a class="dropdown-item active" href="{{ route('manage-token') }}" onclick="event.preventDefault();">
-                                            {{ __('Manage Token') }}
-                                        </a>
-                                    @else
-                                        <a class="dropdown-item" href="{{ route('manage-token') }}">{{ __('Manage Token') }}</a>
-                                    @endif
-                                    @if (Route::current()->getName() === 'ui-change-password')
-                                        <a class="dropdown-item active" href="{{ route('change-password') }}" onclick="event.preventDefault();">
-                                            {{ __('Change Password') }}
-                                        </a>
-                                    @else
-                                        <a class="dropdown-item" href="{{ route('change-password') }}">{{ __('Change Password') }}</a>
-                                    @endif
+                                    <a class="dropdown-item {{ Route::current()->getName() === 'manage-token' ? 'active' : '' }}" href="{{ route('manage-token') }}" onclick="{{ Route::current()->getName() === 'manage-token' ? 'event.preventDefault();' : '' }}">
+                                        {{ __('Manage Token') }}
+                                    </a>
+                                    <a class="dropdown-item {{ Route::current()->getName() === 'ui-change-password' ? 'active' : '' }}" href="{{ route('change-password') }}" onclick="{{ Route::current()->getName() === 'ui-change-password' ? 'event.preventDefault();' : '' }}">
+                                        {{ __('Change Password') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

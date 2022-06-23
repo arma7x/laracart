@@ -21,6 +21,12 @@ class UserList extends Component
     public $access_level;
     public $read_permission;
     public $write_permission;
+    public $search;
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'page' => ['except' => 1],
+    ];
 
     protected $paginationTheme = 'bootstrap';
 
@@ -31,6 +37,11 @@ class UserList extends Component
         'read_permission' => 'required|integer|min:0|max:1',
         'write_permission' => 'required|integer|min:0|max:1',
     ];
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function resetErrorPopulate($user)
     {
@@ -66,7 +77,7 @@ class UserList extends Component
 
     public function render()
     {
-        $q = request()->query('search');
+        $q = $this->search;
         $userList = [];
         if ($q) {
           $userList = UserModel::where('id', '!=', Auth::user()->id)

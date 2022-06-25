@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header d-flex flex-row justify-content-between">
         <h3>{{ __('Manage Firebase User') }}</h3>
-        <input id="searchInput" type="text" class="form-control w-25" wire:model.debounce.500ms="search" placeholder="{{ __('Search user') }}">
+        <input id="searchInput" type="text" class="form-control w-25" wire:model.debounce.1000ms="search" placeholder="{{ __('Search user') }}">
     </div>
     <div class="card-body">
         @if ($user === null)
@@ -29,14 +29,14 @@
                     <h5>Provider: {{ strtoupper($user['providerData'][0]->providerId) }}</h5>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-sm {{ $user['disabled'] ? 'btn-success' : 'btn-secondary' }}" onClick="setStatus('{{ $user['uid'] }}', {{ $user['disabled'] }})">
+                        {{ $user['disabled'] ? __('Enable') : __('Disable') }}
+                    </button>
                     <button type="button" class="btn btn-sm btn-primary" onClick="revokeRefreshTokens('{{ $user['uid'] }}')">
                         {{ __('Revoke Token') }}
                     </button>
-                    <button type="button" class="btn btn-sm btn-secondary" onClick="setStatus('{{ $user['uid'] }}', {{ $user['disabled'] }})">
-                        {{ $user['disabled'] ? __('Enable User') : __('Disable User') }}
-                    </button>
                     <button type="button" class="btn btn-sm btn-danger" onClick="deleteUser('{{ $user['uid'] }}')">
-                        {{ __('Delete User') }}
+                        {{ __('Delete') }}
                     </button>
                 </div>
             </div>

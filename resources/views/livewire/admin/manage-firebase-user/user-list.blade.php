@@ -106,8 +106,6 @@
 
     document.addEventListener('livewire:load', function () {
 
-        claimsForm = document.getElementById('claimsForm');
-
         toLocalDateString();
 
         Livewire.hook('message.processed', component => {
@@ -117,9 +115,12 @@
 
     function toLocalDateString() {
         let userdates = document.getElementsByClassName('user-date');
-        Object.keys(userdates).forEach((i) => {
-            userdates[i].innerText = new Date(userdates[i].getAttribute("data-date")).toLocaleString();
-        })
+        if (userdates.length > 0) {
+            claimsForm = document.getElementById('claimsForm');
+            Object.keys(userdates).forEach((i) => {
+                userdates[i].innerText = new Date(userdates[i].getAttribute("data-date")).toLocaleString();
+            })
+        }
     }
 
     function setStatus(uid, disabled) {

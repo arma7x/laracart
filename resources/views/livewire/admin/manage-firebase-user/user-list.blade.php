@@ -62,7 +62,7 @@
                                     <input name="claims_key" class="form-control" value="{{ $key }}" placeholder="{{ __('Key') }}">
                                 </div>
                                 <div class="col m-0 p-0 mx-2">
-                                    <input name="claims_value" class="form-control" value="{{ var_export($value) }}" placeholder="{{ __('Value') }}">
+                                    <input name="claims_value" class="form-control" value="{{ is_bool($value) ? var_export($value) : $value }}" placeholder="{{ __('Value') }}">
                                 </div>
                                 <button class="col btn btn-sm btn-warning" style="max-width:40px!important;" onClick="this.parentNode.remove()">X</button>
                             </div>

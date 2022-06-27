@@ -81,6 +81,9 @@
 
     function deleteUser(uid) {
         console.log('deleteUser');
+        const conf = confirm("{{ __('Are you sure to continue this operation ?') }}");
+        if (!conf)
+            return;
         @this.deleteUser(uid);
     }
 </script>

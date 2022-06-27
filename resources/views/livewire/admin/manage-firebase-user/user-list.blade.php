@@ -66,21 +66,17 @@
 
     function setStatus(uid, disabled) {
         if (disabled) {
-            console.log('enableUser');
             @this.enableUser(uid);
         } else {
-            console.log('disableUser');
             @this.disableUser(uid);
         }
     }
 
     function revokeRefreshTokens(uid) {
-        console.log('revokeRefreshTokens');
         @this.revokeRefreshTokens(uid);
     }
 
     function deleteUser(uid) {
-        console.log('deleteUser');
         const conf = confirm("{{ __('Are you sure to continue this operation ?') }}");
         if (!conf)
             return;

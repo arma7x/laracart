@@ -26,7 +26,7 @@
 </head>
 <body>
     <div id="app" class="d-flex flex-column h-100" style="height:100vh!important;">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-5">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-5 fixed-top">
             <div class="container">
                 <div class="d-flex flex-row">
                     <a class="navbar-brand" href="{{ url('/') }}">
@@ -111,10 +111,10 @@
             </div>
         </nav>
 
-        <main class="flex-shrink-0">
+        <main class="flex-shrink-0" style="padding-top: 8em;">
             @foreach (Session::all() as $key => $value)
                @if (str_starts_with($key, 'has_'))
-                <div class="alert alert-{{ str_replace('has_', '', $key) }} alert-dismissible text-center fade show" role="alert" style="margin-top:-3rem!important;">
+                <div class="alert alert-{{ str_replace('has_', '', $key) }} alert-dismissible text-center fade show" role="alert" style="margin-top: -3.7rem!important;">
                   <strong>{{ $value }}</strong>
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>

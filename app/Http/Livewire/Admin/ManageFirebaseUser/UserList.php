@@ -5,9 +5,12 @@ namespace App\Http\Livewire\Admin\ManageFirebaseUser;
 use App\Facades\Helpers\FirebaseHelper as Firebase;
 use Livewire\Component;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class UserList extends Component
 {
+    use AuthorizesRequests;
+
     public $user;
     public $search;
 
@@ -42,37 +45,44 @@ class UserList extends Component
     // TODO
     private function getCustomUserClaims($uid)
     {
+        $this->authorize('manage-user');
         return Firebase::auth()->getUser($uid)->customClaims;
     }
 
     // TODO
     public function setCustomUserClaims($uid, $claims = [])
     {
-
+        $this->authorize('manage-user');
     }
 
-    // TODO
     public function disableUser($uid)
     {
-
+        $this->authorize('manage-user');
+        Firebase::auth()->disableUser($uid);
     }
 
-    // TODO
     public function enableUser($uid)
     {
-
+        $this->authorize('manage-user');('manage-user');
+        Firebase::auth()->enableUser($uid);
     }
 
-    // TODO
     public function revokeRefreshTokens($uid)
     {
-
+        $this->authorize('manage-user');
+        Firebase::auth()->revokeRefreshTokens($uid);
     }
 
-    // TODO
     public function deleteUser($uid)
     {
-
+        $this->authorize('manage-user');
+        try {
+            Firebase::auth()->deleteUser($uid);
+        } catch (\Kreait\Firebase\Exception\Auth\UserNotFound $e) {
+            $this->user = $e->getMessage();
+        } catch (\Kreait\Firebase\Exception\AuthException $e) {
+            $this->user = $e->getMessage();
+        }
     }
 
     public function render()

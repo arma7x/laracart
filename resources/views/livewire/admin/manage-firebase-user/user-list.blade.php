@@ -64,7 +64,7 @@
                                 <div class="col m-0 p-0 mx-2">
                                     <input name="claims_value" class="form-control" value="{{ $value }}" placeholder="{{ __('Value') }}">
                                 </div>
-                                <button class="col btn btn-sm btn-warning" style="max-width:40px!important;" onClick="remove_claim(this)">X</button>
+                                <button class="col btn btn-sm btn-warning" style="max-width:40px!important;" onClick="this.parentNode.remove()">X</button>
                             </div>
                         @endforeach
                         </form>
@@ -141,10 +141,6 @@
         @this.deleteUser(uid);
     }
 
-    function remove_claim(evt) {
-        evt.parentNode.remove();
-    }
-
     function generate_new_claim() {
         const template = '<div class="row m-0 p-0 mb-2">\
             <div class="col m-0 p-0">\
@@ -153,7 +149,7 @@
             <div class="col m-0 p-0 mx-2">\
                 <input name="claims_value" class="form-control" placeholder="{{ __('Value') }}">\
             </div>\
-            <button class="col btn btn-sm btn-warning" style="max-width:40px!important;" onClick="remove_claim(this)">X</button>\
+            <button class="col btn btn-sm btn-warning" style="max-width:40px!important;" onClick="this.parentNode.remove()">X</button>\
         </div>';
         const node = new DOMParser().parseFromString(template, 'text/html').body.childNodes[0];
         claimsForm.appendChild(node);

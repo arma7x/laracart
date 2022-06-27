@@ -16,19 +16,43 @@
                 </div>
                 <div class="modal-body">
                     @if ($user['email'] !== null)
-                        <h5>Email: {{ $user['email'] }}[{{ $user['emailVerified'] ? __('Verified') : __('Unverified') }}]</h5>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 style="margin-bottom: -2px!important;">Email:</h5>
+                        <h5 style="font-weight:bold;">{{ $user['email'] }}[{{ $user['emailVerified'] ? __('Verified') : __('Unverified') }}]</h5>
+                    </div>
                     @endif
                     @if ($user['displayName'] !== null)
-                        <h5>Display Name: {{ $user['displayName'] }}</h5>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 style="margin-bottom: -2px!important;">Display Name:</h5>
+                        <h5 style="font-weight:bold;">{{ $user['displayName'] }}</h5>
+                    </div>
                     @endif
                     @if ($user['phoneNumber'] !== null)
-                        <h5>Phone Number: {{ $user['phoneNumber'] }}</h5>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 style="margin-bottom: -2px!important;">Phone Number:</h5>
+                        <h5 style="font-weight:bold;"> {{ $user['phoneNumber'] }}</h5>
+                    </div>
                     @endif
-                    <h5>Created At: <span class="user-date" data-date="{{ $user['metadata']->createdAt->format(DateTimeInterface::RFC3339) }}"></span></h5>
-                    <h5>Last Login At: <span class="user-date" data-date="{{ $user['metadata']->lastLoginAt->format(DateTimeInterface::RFC3339) }}"></span></h5>
-                    <h5>Last Refresh At: <span class="user-date" data-date="{{ $user['metadata']->lastRefreshAt->format(DateTimeInterface::RFC3339) }}"></span></h5>
-                    <h5>Tokens Valid After Time: <span class="user-date" data-date="{{ $user['tokensValidAfterTime'] }}"></span></h5>
-                    <h5>Provider: {{ strtoupper($user['providerData'][0]->providerId) }}</h5>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 style="margin-bottom: -2px!important;">Created At:</h5>
+                        <h5 style="font-weight:bold;"><span class="user-date" data-date="{{ $user['metadata']->createdAt->format(DateTimeInterface::RFC3339) }}"></span></h5>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 style="margin-bottom: -2px!important;">Last Login At:</h5>
+                        <h5 style="font-weight:bold;"><span class="user-date" data-date="{{ $user['metadata']->lastLoginAt->format(DateTimeInterface::RFC3339) }}"></span></h5>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 style="margin-bottom: -2px!important;">Last Refresh At:</h5>
+                        <h5 style="font-weight:bold;"><span class="user-date" data-date="{{ $user['metadata']->lastRefreshAt->format(DateTimeInterface::RFC3339) }}"></span></h5>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 style="margin-bottom: -2px!important;">Tokens Valid After Time:</h5>
+                        <h5 style="font-weight:bold;"><span class="user-date" data-date="{{ $user['tokensValidAfterTime'] }}"></span></h5>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 style="margin-bottom: -2px!important;">Provider:</h5>
+                        <h5 style="font-weight:bold;">{{ strtoupper($user['providerData'][0]->providerId) }}</h5>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm {{ $user['disabled'] ? 'btn-success' : 'btn-secondary' }}" onClick="setStatus('{{ $user['uid'] }}', {{ $user['disabled'] }})">

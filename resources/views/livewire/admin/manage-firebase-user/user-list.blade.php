@@ -26,6 +26,7 @@
                     @endif
                     <h5>Created At: <span class="user-date" data-date="{{ $user['metadata']->createdAt->format(DateTimeInterface::RFC3339) }}"></span></h5>
                     <h5>Last Login At: <span class="user-date" data-date="{{ $user['metadata']->lastLoginAt->format(DateTimeInterface::RFC3339) }}"></span></h5>
+                    <h5>Last Refresh At: <span class="user-date" data-date="{{ $user['metadata']->lastRefreshAt->format(DateTimeInterface::RFC3339) }}"></span></h5>
                     <h5>Provider: {{ strtoupper($user['providerData'][0]->providerId) }}</h5>
                 </div>
                 <div class="modal-footer">

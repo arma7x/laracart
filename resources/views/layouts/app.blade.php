@@ -68,7 +68,7 @@
                             </li>
                             @else
                             <li id="firebaseLogoutBtn">
-                                <a class="nav-link" href="#" onclick="event.preventDefault();">Hi {{ firebase::user()['name'] }}</a>
+                                <a class="nav-link" href="#" onclick="event.preventDefault();">Hi {{ firebase::user()['name'] ?? (firebase::user()['displayName'] ?? '') }}</a>
                             </li>
                             <li id="firebaseLogoutBtn">
                                 <a class="nav-link" href="#" onclick="event.preventDefault();logoutFirebase();">{{ __('Firebase Logout') }}</a>
